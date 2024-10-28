@@ -1,28 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:student_management_provider/provider/student_provider.dart';
 import 'package:student_management_provider/screens/add_students.dart';
 import 'package:student_management_provider/widgets/widgets.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<StudentProvider>(context, listen: false).loadStudents();
-    });
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<StudentProvider>(context, listen: false).loadStudents();
+    });
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[100],

@@ -136,28 +136,30 @@ buildStudentListTile(
   );
 }
 
-void showDeleteDialog(
+Future<bool> showDeleteDialog(
     BuildContext context, Student student, StudentProvider provider) {
-  showDialog(
+  return showDialog<bool>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         title: const Text('Delete Student'),
-        content: Text('Are you sure you want to delete ${student.name}?'),
+        content: const Text('Are you sure you want to delete this student?'),
         actions: [
           TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(false); // Return false for cancel
+            },
             child: const Text('Cancel'),
-            onPressed: () => Navigator.of(context).pop(),
           ),
           TextButton(
-            child: const Text('Delete'),
             onPressed: () {
-              provider.deleteStudent(student.id!);
-              Navigator.of(context).pop();
+              provider.deleteStudent(student.id!); // Perform delete action
+              Navigator.of(context).pop(true); // Return true for confirmation
             },
+            child: const Text('Delete'),
           ),
         ],
       );
     },
-  );
+  ).then((value) => value ?? false); // Ensure a default return value of false
 }

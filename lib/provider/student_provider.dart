@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:student_management_provider/controller/database_helper.dart';
 import 'package:student_management_provider/model/student_model.dart';
 
@@ -118,11 +117,10 @@ class StudentProvider extends ChangeNotifier {
       await updateStudent1(updatedStudent);
       await loadStudents();
     } catch (e) {
-      // Handle error (log or show a message)
       print(e);
     } finally {
-      isLoading1 = false; // Make sure to set loading to false here
-      notifyListeners(); // Notify listeners
+      isLoading1 = false;
+      notifyListeners();
     }
   }
 
@@ -158,21 +156,6 @@ class StudentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<Student> getStudent(int id) async {
-  //   isLoading1 = true;
-  //   notifyListeners();
-
-  //   try {
-  //     _student1 = await getStudent(id);
-  //     isLoading1 = false;
-  //     return _student1!;
-  //   } catch (e) {
-  //     isLoading1 = false;
-  //     notifyListeners();
-  //     rethrow;
-  //   }
-  // }
-
   Future getStudent1(int id) async {
     isLoading1 = true;
     notifyListeners();
@@ -188,6 +171,11 @@ class StudentProvider extends ChangeNotifier {
     }
 
     isLoading1 = false;
+    notifyListeners();
+  }
+
+  void clearStudentData() {
+    _student1 = null;
     notifyListeners();
   }
 }
